@@ -13,7 +13,7 @@
 
 ## 安装
 
-在 Flutter 项目的 `pubspec.yaml` 中添加依赖：
+在项目的 `pubspec.yaml` 中添加依赖：
 
 ```yaml
 dependencies:
@@ -25,7 +25,7 @@ dependencies:
 ```yaml
 dependencies:
   qs_toast:
-    path: ./qs_toast
+    path: ../qs_toast
 ```
 
 然后执行：
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-如果项目已经有自定义 `builder`，可以传入原有的 `builder`：
+如果你的项目已经有自定义 `builder`，可以传入原有的 `builder`：
 
 ```dart
 MaterialApp(
@@ -161,7 +161,7 @@ await QsToast.dismiss(
 | `dismiss` | `animation` | `bool` | `true` | 关闭时是否显示动画 |
 | `dismiss` | `dismissAction` | `VoidCallback?` | `null` | 关闭后的回调 |
 
-`maskType` 来自 `flutter_easyloading`。如需使用其他遮罩类型，可以引入：
+`maskType` 来自 `flutter_easyloading`，如需使用其他遮罩类型，可以引入：
 
 ```dart
 import 'package:flutter_easyloading/flutter_easyloading.dart';
