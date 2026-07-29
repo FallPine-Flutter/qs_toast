@@ -22,15 +22,21 @@ class QsToast {
     EasyLoadingMaskType maskType = EasyLoadingMaskType.black,
     VoidCallback? dismissAction,
   }) async {
-    if (_isLoading) {
+    if (_isLoading && _loadingText == text) {
       return;
+    }
+    if (_isLoading && _loadingText != text) {
+      await EasyLoading.dismiss(animation: true);
+      Future.delayed(const Duration(milliseconds: 100), dismissAction);
     }
     await EasyLoading.show(status: text, maskType: maskType);
     if (longestTime != null) {
       _isLoading = true;
+      _loadingText = text ?? "";
       Future.delayed(Duration(seconds: longestTime), () {
-        if (_isLoading) {
+        if (_isLoading && _loadingText == text) {
           _isLoading = false;
+          _loadingText = "";
           EasyLoading.dismiss(animation: true);
           Future.delayed(const Duration(milliseconds: 100), dismissAction);
         }
@@ -77,10 +83,12 @@ class QsToast {
     VoidCallback? dismissAction,
   }) async {
     _isLoading = false;
+    _loadingText = "";
     EasyLoading.dismiss(animation: animation);
     Future.delayed(const Duration(milliseconds: 100), dismissAction);
   }
 
   /// Property
   static bool _isLoading = false;
+  static String _loadingText = "";
 }
