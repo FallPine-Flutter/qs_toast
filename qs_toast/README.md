@@ -11,6 +11,7 @@
 - 手动关闭当前提示
 - 支持遮罩类型、显示时长和关闭回调
 - 支持在已有 `MaterialApp.builder` 基础上初始化
+- 支持加载提示去重，避免相同加载提示重复弹出
 
 ## 安装
 
@@ -83,6 +84,8 @@ MaterialApp(
 ```dart
 await QsToast.loading(text: '加载中...');
 ```
+
+如果当前已经显示相同文案的加载提示，会直接忽略本次调用；如果文案不同，会先关闭旧提示，再显示新的加载提示。
 
 设置最长显示时间，超时后自动关闭：
 
@@ -280,7 +283,18 @@ class HomePage extends StatelessWidget {
 
 - `QsToast.init()` 必须配置在应用入口的 `MaterialApp.builder` 中。
 - `loading` 设置 `longestTime` 后会进入加载状态，到时会自动关闭；也可以通过 `QsToast.dismiss()` 主动关闭。
+- 多次调用 `loading` 时，相同文案不会重复显示；不同文案会替换当前加载提示。
 - `text`、`success`、`error` 的 `dismissAction` 会在 `duration` 结束后触发。
+
+## 运行示例
+
+进入示例工程后运行：
+
+```bash
+cd example
+flutter pub get
+flutter run
+```
 
 ## 平台支持
 
