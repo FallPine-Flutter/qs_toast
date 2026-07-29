@@ -22,6 +22,9 @@ class QsToast {
     EasyLoadingMaskType maskType = EasyLoadingMaskType.black,
     VoidCallback? dismissAction,
   }) async {
+    if (_isLoading) {
+      return;
+    }
     await EasyLoading.show(status: text, maskType: maskType);
     if (longestTime != null) {
       _isLoading = true;

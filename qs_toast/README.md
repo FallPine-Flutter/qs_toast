@@ -1,15 +1,16 @@
 # qs_toast
 
-`qs_toast` 是一个基于 `flutter_easyloading` 封装的 Flutter Toast 插件，用于快速显示加载、文本、成功、错误提示，并支持手动关闭弹窗。
+`qs_toast` 是一个基于 `flutter_easyloading` 封装的 Flutter Toast 插件，提供加载中、文本、成功、错误提示以及手动关闭能力。
 
-## 功能
+## 功能特性
 
-- 显示加载中弹窗
+- 显示加载中提示
 - 显示普通文本 Toast
-- 显示成功 Toast
-- 显示错误 Toast
-- 手动关闭当前弹窗
-- 支持设置遮罩类型、显示时长和关闭回调
+- 显示成功提示
+- 显示错误提示
+- 手动关闭当前提示
+- 支持遮罩类型、显示时长和关闭回调
+- 支持在已有 `MaterialApp.builder` 基础上初始化
 
 ## 安装
 
@@ -17,7 +18,7 @@
 
 ```yaml
 dependencies:
-  qs_toast: ^1.0.0
+  qs_toast: ^1.0.1
 ```
 
 如果使用本地路径依赖：
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-如果你的项目已经有自定义 `builder`，可以传入原有的 `builder`：
+如果项目已经配置了自定义 `builder`，可以通过 `builder` 参数传入原有逻辑：
 
 ```dart
 MaterialApp(
@@ -77,7 +78,7 @@ MaterialApp(
 
 ## 使用方法
 
-### 显示加载中
+### 加载中
 
 ```dart
 await QsToast.loading(text: '加载中...');
@@ -90,12 +91,12 @@ await QsToast.loading(
   text: '提交中...',
   longestTime: 10,
   dismissAction: () {
-    // 加载弹窗自动关闭后的回调
+    // 加载提示自动关闭后的回调
   },
 );
 ```
 
-### 显示文本提示
+### 文本提示
 
 ```dart
 await QsToast.text(text: '操作已完成');
@@ -110,19 +111,19 @@ await QsToast.text(
 );
 ```
 
-### 显示成功提示
+### 成功提示
 
 ```dart
 await QsToast.success(text: '提交成功');
 ```
 
-### 显示错误提示
+### 错误提示
 
 ```dart
 await QsToast.error(text: '提交失败，请稍后再试');
 ```
 
-### 关闭弹窗
+### 关闭提示
 
 ```dart
 await QsToast.dismiss();
@@ -133,35 +134,63 @@ await QsToast.dismiss();
 ```dart
 await QsToast.dismiss(
   dismissAction: () {
-    // 弹窗关闭后的回调
+    // 提示关闭后的回调
   },
 );
 ```
 
-## 参数说明
+## API
 
-| 方法 | 参数 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- | --- |
-| `loading` | `text` | `String?` | `null` | 加载提示文案 |
-| `loading` | `longestTime` | `int?` | `null` | 最长显示时间，单位为秒 |
-| `loading` | `maskType` | `EasyLoadingMaskType` | `EasyLoadingMaskType.black` | 遮罩类型 |
-| `loading` | `dismissAction` | `VoidCallback?` | `null` | 自动关闭后的回调 |
-| `text` | `text` | `String` | 必填 | 文本提示文案 |
-| `text` | `maskType` | `EasyLoadingMaskType` | `EasyLoadingMaskType.black` | 遮罩类型 |
-| `text` | `duration` | `Duration` | `Duration(seconds: 1)` | 显示时长 |
-| `text` | `dismissAction` | `VoidCallback?` | `null` | 关闭后的回调 |
-| `success` | `text` | `String` | 必填 | 成功提示文案 |
-| `success` | `maskType` | `EasyLoadingMaskType` | `EasyLoadingMaskType.black` | 遮罩类型 |
-| `success` | `duration` | `Duration` | `Duration(seconds: 1)` | 显示时长 |
-| `success` | `dismissAction` | `VoidCallback?` | `null` | 关闭后的回调 |
-| `error` | `text` | `String` | 必填 | 错误提示文案 |
-| `error` | `maskType` | `EasyLoadingMaskType` | `EasyLoadingMaskType.black` | 遮罩类型 |
-| `error` | `duration` | `Duration` | `Duration(seconds: 1)` | 显示时长 |
-| `error` | `dismissAction` | `VoidCallback?` | `null` | 关闭后的回调 |
-| `dismiss` | `animation` | `bool` | `true` | 关闭时是否显示动画 |
-| `dismiss` | `dismissAction` | `VoidCallback?` | `null` | 关闭后的回调 |
+### QsToast.init
 
-`maskType` 来自 `flutter_easyloading`，如需使用其他遮罩类型，可以引入：
+| 参数 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `builder` | `TransitionBuilder?` | `null` | 已有的 `MaterialApp.builder` 逻辑 |
+
+### QsToast.loading
+
+| 参数 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `text` | `String?` | `null` | 加载提示文案 |
+| `longestTime` | `int?` | `null` | 最长显示时间，单位为秒。设置后到时自动关闭 |
+| `maskType` | `EasyLoadingMaskType` | `EasyLoadingMaskType.black` | 遮罩类型 |
+| `dismissAction` | `VoidCallback?` | `null` | 自动关闭后的回调 |
+
+### QsToast.text
+
+| 参数 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `text` | `String` | 必填 | 文本提示文案 |
+| `maskType` | `EasyLoadingMaskType` | `EasyLoadingMaskType.black` | 遮罩类型 |
+| `duration` | `Duration` | `Duration(seconds: 1)` | 显示时长 |
+| `dismissAction` | `VoidCallback?` | `null` | 关闭后的回调 |
+
+### QsToast.success
+
+| 参数 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `text` | `String` | 必填 | 成功提示文案 |
+| `maskType` | `EasyLoadingMaskType` | `EasyLoadingMaskType.black` | 遮罩类型 |
+| `duration` | `Duration` | `Duration(seconds: 1)` | 显示时长 |
+| `dismissAction` | `VoidCallback?` | `null` | 关闭后的回调 |
+
+### QsToast.error
+
+| 参数 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `text` | `String` | 必填 | 错误提示文案 |
+| `maskType` | `EasyLoadingMaskType` | `EasyLoadingMaskType.black` | 遮罩类型 |
+| `duration` | `Duration` | `Duration(seconds: 1)` | 显示时长 |
+| `dismissAction` | `VoidCallback?` | `null` | 关闭后的回调 |
+
+### QsToast.dismiss
+
+| 参数 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `animation` | `bool` | `true` | 关闭时是否显示动画 |
+| `dismissAction` | `VoidCallback?` | `null` | 关闭后的回调 |
+
+`maskType` 来自 `flutter_easyloading`。如果需要使用其他遮罩类型，可以引入：
 
 ```dart
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -237,7 +266,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 QsToast.dismiss();
               },
-              child: const Text('关闭弹窗'),
+              child: const Text('关闭提示'),
             ),
           ],
         ),
@@ -246,6 +275,12 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+
+## 注意事项
+
+- `QsToast.init()` 必须配置在应用入口的 `MaterialApp.builder` 中。
+- `loading` 设置 `longestTime` 后会进入加载状态，到时会自动关闭；也可以通过 `QsToast.dismiss()` 主动关闭。
+- `text`、`success`、`error` 的 `dismissAction` 会在 `duration` 结束后触发。
 
 ## 平台支持
 
