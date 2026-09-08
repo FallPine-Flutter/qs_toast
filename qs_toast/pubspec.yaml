@@ -1,7 +1,7 @@
 name: qs_toast
 description: "一个依赖flutter_easyloading的Toast插件"
-version: 1.0.1
-homepage: "https://github.com/fallpine/qs_flutter_toast"
+version: 1.0.2
+homepage: "https://github.com/FallPine-Flutter/qs_toast"
 
 environment:
   sdk: ^3.10.0
