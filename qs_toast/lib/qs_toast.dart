@@ -1,14 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-import 'qs_toast_platform_interface.dart';
-
 class QsToast {
-  /// 获取平台版本
-  Future<String?> getPlatformVersion() {
-    return QsToastPlatform.instance.getPlatformVersion();
-  }
-
   /// 初始化
   /// 必须在MaterialApp的builder中调用
   static TransitionBuilder init({TransitionBuilder? builder}) {
