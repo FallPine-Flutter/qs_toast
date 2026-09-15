@@ -27,9 +27,14 @@ Thumbs.db
 **/doc/api/
 **/lcov.info
 
-# Reusable plugin packages should not commit their dependency lock file.
-# Keep the example app lock file for reproducible example builds.
+# Reusable plugin packages and bundled examples resolve dependencies from constraints.
 /qs_toast/pubspec.lock
+**/example/pubspec.lock
+
+# Bundled example iOS dependency-resolution files
+**/example/ios/Podfile
+**/example/ios/Flutter/Debug.xcconfig
+**/example/ios/Flutter/Release.xcconfig
 
 # Symbolication and obfuscation output
 **/app.*.symbols
